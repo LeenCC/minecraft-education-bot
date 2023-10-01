@@ -146,6 +146,10 @@ def follow():
     player_y = player_position.get_value(2)
     distance_x = abs(player_x - agent_x)
     distance_y = abs(player_y - agent_y)
+    distance = distance_x + distance_y
+    while distance > 0:
+        agent.move(FORWARD, 1)
+        #TODO: make agent move closer to agent
     
 
 
