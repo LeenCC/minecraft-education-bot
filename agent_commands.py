@@ -137,6 +137,10 @@ def earthquake():
         blocks.place(LAVA, positions.add(center, pos(0, -3, 0)))
 
 
+def follow():
+    distance = positions.add(player.position(), agent.get_position())
+    #TODO: logic to make agent follow
+
 
 player.on_travelled(WALK, blossom_walk)
 
@@ -153,4 +157,6 @@ player.on_chat("pyramid", build_pyramid)
 player.on_chat("tower", build_tower)
 
 player.on_chat("earthquake", earthquake)
+
+player.on_chat("follow", follow)
 
