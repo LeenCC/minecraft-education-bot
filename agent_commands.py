@@ -1,17 +1,11 @@
-center: Position = None
-location: Position = None
-layer = 0
-roofLayers = 0
-j = 0
 
-
-def blossom_walk() -> None:
+def blossom_walk():
     if blocks.test_for_block(GRASS, pos(0, -1, 0)):
         blocks.place(YELLOW_FLOWER, pos(1, 0, 0))
         blocks.place(OXEYE_DAISY, pos(0, 0, 0))
         blocks.place(POPPY, pos(-1, 0, 0))
 
-def move_forward(blocks:int) -> None:
+def move_forward(blocks:int):
     for _ in range(blocks):
         if agent.detect(AgentDetection.BLOCK, FORWARD):
             agent.destroy(FORWARD)
@@ -19,25 +13,25 @@ def move_forward(blocks:int) -> None:
         if agent.detect(AgentDetection.BLOCK, UP):
             agent.destroy(UP)
 
-def turn_left() -> None:
+def turn_left():
     agent.turn(LEFT_TURN)
 
-def turn_right() -> None:
+def turn_right():
     agent.turn(RIGHT_TURN)
 
-def move_up(blocks:int) -> None:
+def move_up(blocks:int):
     for _ in range(blocks):
         if agent.detect(AgentDetection.BLOCK, UP):
             agent.destroy(UP)
         agent.move(UP, 1)
         
-def dig_down(blocks:int) -> None:
+def dig_down(blocks:int):
     for _ in range(blocks):
         if agent.detect(AgentDetection.BLOCK, DOWN):
             agent.destroy(DOWN)
         agent.move(DOWN, 1)
 
-def build_tower() -> None:
+def build_tower():
     agent.teleport_to_player()
     agent.move(FORWARD, 5)
     agent.set_slot(1)
@@ -50,7 +44,7 @@ def build_tower() -> None:
             agent.turn(LEFT_TURN)
         agent.move(UP, 1)
 
-def build_wall(width:int, height:int) -> None:
+def build_wall(width:int, height:int):
     for _ in range(height):
         builder.move(FORWARD, width)
         builder.move(UP, 1)
@@ -58,8 +52,10 @@ def build_wall(width:int, height:int) -> None:
         builder.turn(LEFT_TURN)
     builder.trace_path(MOSSY_STONE_BRICKS)
 
-def build_house(width:int, height:int) -> None:
-    global j, roofLayers, layer
+def build_house(width:int, height:int):
+    layer = 0
+    roofLayers = 0
+    j = 0
     builder.teleport_to(pos(0, -1, -5))
     while j <= height - 1:
         builder.move(UP, 1)
@@ -77,7 +73,7 @@ def build_house(width:int, height:int) -> None:
     while layer <= roofLayers + 1:
         builder.mark()
         for _ in range(4):
-            builder.move(FORWARD, width2 + 1 - layer * 2)
+            builder.move(FORWARD, width + 1 - layer * 2)
             builder.turn(LEFT_TURN)
         builder.trace_path(PLANKS_OAK)
         builder.shift(1, 1, 1)
@@ -92,7 +88,7 @@ def build_house(width:int, height:int) -> None:
     builder.move(RIGHT, width - 1)
     builder.place(GLASS)
 
-def build_pyramid(size:int) -> None:
+def build_pyramid(size:int):
     if size > 0:
         agent.set_item(SANDSTONE, size * size, 1)
         agent.set_slot(1)
@@ -107,7 +103,7 @@ def build_pyramid(size:int) -> None:
         agent.move(FORWARD, 1)
         player.run_chat_command("pyramid " + ("" + str((size - 2))))
 
-def build_cave() -> None:
+def build_cave():
     agent.teleport_to_player()
     for _ in range(10):
         agent.destroy(FORWARD)
@@ -130,8 +126,7 @@ def build_cave() -> None:
         mobs.spawn(BAT, bat_cave)
 
 
-def earthquake() -> None:
-    global center
+def earthquake():
     center = positions.add(player.position(), pos(-30, 0, 0))
     for _ in range(30):
         center = positions.add(center, pos(1, 0, Math.random_range(0, 2)))
