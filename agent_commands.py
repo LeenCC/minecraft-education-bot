@@ -138,8 +138,15 @@ def earthquake():
 
 
 def follow():
-    distance = positions.add(player.position(), agent.get_position())
-    #TODO: logic to make agent follow
+    agent_position = agent.get_position()
+    player_position = player.position()
+    agent_x = agent_position.get_value(0)
+    agent_y = agent_position.get_value(2)
+    player_x = player_position.get_value(0)
+    player_y = player_position.get_value(2)
+    distance_x = abs(player_x - agent_x)
+    distance_y = abs(player_y - agent_y)
+    
 
 
 player.on_travelled(WALK, blossom_walk)
